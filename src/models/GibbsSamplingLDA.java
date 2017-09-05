@@ -74,46 +74,23 @@ public class GibbsSamplingLDA
 	public String tAssignsFilePath = "";
 	public int savestep = 0;
 
-	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics,
-		double inAlpha, double inBeta, int inNumIterations, int inTopWords)
-		throws Exception
-	{
-		this(pathToCorpus, inNumTopics, inAlpha, inBeta, inNumIterations,
-			inTopWords, "LDAmodel");
+	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics, double inAlpha, double inBeta, int inNumIterations, int inTopWords) throws Exception {
+		this(pathToCorpus, inNumTopics, inAlpha, inBeta, inNumIterations, inTopWords, "LDAmodel");
 	}
 
-	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics,
-		double inAlpha, double inBeta, int inNumIterations, int inTopWords,
-		String inExpName)
-		throws Exception
-	{
-		this(pathToCorpus, inNumTopics, inAlpha, inBeta, inNumIterations,
-			inTopWords, inExpName, "", 0);
+	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics, double inAlpha, double inBeta, int inNumIterations, int inTopWords, String inExpName) throws Exception {
+		this(pathToCorpus, inNumTopics, inAlpha, inBeta, inNumIterations, inTopWords, inExpName, "", 0);
 	}
 
-	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics,
-		double inAlpha, double inBeta, int inNumIterations, int inTopWords,
-		String inExpName, String pathToTAfile)
-		throws Exception
-	{
-		this(pathToCorpus, inNumTopics, inAlpha, inBeta, inNumIterations,
-			inTopWords, inExpName, pathToTAfile, 0);
+	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics, double inAlpha, double inBeta, int inNumIterations, int inTopWords, String inExpName, String pathToTAfile) throws Exception {
+		this(pathToCorpus, inNumTopics, inAlpha, inBeta, inNumIterations, inTopWords, inExpName, pathToTAfile, 0);
 	}
 
-	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics,
-		double inAlpha, double inBeta, int inNumIterations, int inTopWords,
-		String inExpName, int inSaveStep)
-		throws Exception
-	{
-		this(pathToCorpus, inNumTopics, inAlpha, inBeta, inNumIterations,
-			inTopWords, inExpName, "", inSaveStep);
+	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics, double inAlpha, double inBeta, int inNumIterations, int inTopWords, String inExpName, int inSaveStep) throws Exception {
+		this(pathToCorpus, inNumTopics, inAlpha, inBeta, inNumIterations, inTopWords, inExpName, "", inSaveStep);
 	}
 
-	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics,
-		double inAlpha, double inBeta, int inNumIterations, int inTopWords,
-		String inExpName, String pathToTAfile, int inSaveStep)
-		throws Exception
-	{
+	public GibbsSamplingLDA(String pathToCorpus, int inNumTopics, double inAlpha, double inBeta, int inNumIterations, int inTopWords, String inExpName, String pathToTAfile, int inSaveStep) throws Exception {
 
 		alpha = inAlpha;
 		beta = inBeta;
@@ -124,10 +101,7 @@ public class GibbsSamplingLDA
 		expName = inExpName;
 		orgExpName = expName;
 		corpusPath = pathToCorpus;
-		folderPath = pathToCorpus.substring(
-			0,
-			Math.max(pathToCorpus.lastIndexOf("/"),
-				pathToCorpus.lastIndexOf("\\")) + 1);
+		folderPath = pathToCorpus.substring(0, Math.max(pathToCorpus.lastIndexOf("/"), pathToCorpus.lastIndexOf("\\")) + 1);
 
 		System.out.println("Reading topic modeling corpus: " + pathToCorpus);
 
@@ -184,8 +158,7 @@ public class GibbsSamplingLDA
 		alphaSum = numTopics * alpha;
 		betaSum = vocabularySize * beta;
 
-		System.out.println("Corpus size: " + numDocuments + " docs, "
-			+ numWordsInCorpus + " words");
+		System.out.println("Corpus size: " + numDocuments + " docs, " + numWordsInCorpus + " words");
 		System.out.println("Vocabuary size: " + vocabularySize);
 		System.out.println("Number of topics: " + numTopics);
 		System.out.println("alpha: " + alpha);
@@ -203,9 +176,8 @@ public class GibbsSamplingLDA
 	/**
 	 * Randomly initialize topic assignments
 	 */
-	public void initialize()
-		throws IOException
-	{
+	public void initialize() throws IOException {
+		
 		System.out.println("Randomly initializing topic assignments ...");
 
 		topicAssignments = new ArrayList<List<Integer>>();
@@ -230,8 +202,7 @@ public class GibbsSamplingLDA
 	/**
 	 * Initialize topic assignments from a given file
 	 */
-	public void initialize(String pathToTopicAssignmentFile)
-	{
+	public void initialize(String pathToTopicAssignmentFile) {
 		System.out.println("Reading topic-assignment file: "
 			+ pathToTopicAssignmentFile);
 
@@ -271,9 +242,7 @@ public class GibbsSamplingLDA
 		}
 	}
 
-	public void inference()
-		throws IOException
-	{
+	public void inference() throws IOException {
 		writeParameters();
 		writeDictionary();
 
@@ -281,7 +250,7 @@ public class GibbsSamplingLDA
 
 		for (int iter = 1; iter <= numIterations; iter++) {
 
-			System.out.println("\tSampling iteration: " + (iter));
+			//System.out.println("\tSampling iteration: " + (iter));
 			// System.out.println("\t\tPerplexity: " + computePerplexity());
 
 			sampleInSingleIteration();
@@ -303,8 +272,7 @@ public class GibbsSamplingLDA
 
 	}
 
-	public void sampleInSingleIteration()
-	{
+	public void sampleInSingleIteration() {
 		for (int dIndex = 0; dIndex < numDocuments; dIndex++) {
 			int docSize = corpus.get(dIndex).size();
 			for (int wIndex = 0; wIndex < docSize; wIndex++) {
@@ -342,9 +310,7 @@ public class GibbsSamplingLDA
 		}
 	}
 
-	public void writeParameters()
-		throws IOException
-	{
+	public void writeParameters() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".paras"));
 		writer.write("-model" + "\t" + "LDA");
@@ -363,9 +329,7 @@ public class GibbsSamplingLDA
 		writer.close();
 	}
 
-	public void writeDictionary()
-		throws IOException
-	{
+	public void writeDictionary() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".vocabulary"));
 		for (int id = 0; id < vocabularySize; id++)
@@ -373,9 +337,7 @@ public class GibbsSamplingLDA
 		writer.close();
 	}
 
-	public void writeIDbasedCorpus()
-		throws IOException
-	{
+	public void writeIDbasedCorpus() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".IDcorpus"));
 		for (int dIndex = 0; dIndex < numDocuments; dIndex++) {
@@ -388,9 +350,7 @@ public class GibbsSamplingLDA
 		writer.close();
 	}
 
-	public void writeTopicAssignments()
-		throws IOException
-	{
+	public void writeTopicAssignments() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".topicAssignments"));
 		for (int dIndex = 0; dIndex < numDocuments; dIndex++) {
@@ -403,9 +363,7 @@ public class GibbsSamplingLDA
 		writer.close();
 	}
 
-	public void writeTopTopicalWords()
-		throws IOException
-	{
+	public void writeTopTopicalWords() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".topWords"));
 
@@ -438,9 +396,7 @@ public class GibbsSamplingLDA
 		writer.close();
 	}
 
-	public void writeTopicWordPros()
-		throws IOException
-	{
+	public void writeTopicWordPros() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".phi"));
 		for (int i = 0; i < numTopics; i++) {
@@ -454,9 +410,7 @@ public class GibbsSamplingLDA
 		writer.close();
 	}
 
-	public void writeTopicWordCount()
-		throws IOException
-	{
+	public void writeTopicWordCount() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".WTcount"));
 		for (int i = 0; i < numTopics; i++) {
@@ -469,9 +423,7 @@ public class GibbsSamplingLDA
 
 	}
 
-	public void writeDocTopicPros()
-		throws IOException
-	{
+	public void writeDocTopicPros() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".theta"));
 		for (int i = 0; i < numDocuments; i++) {
@@ -485,9 +437,7 @@ public class GibbsSamplingLDA
 		writer.close();
 	}
 
-	public void writeDocTopicCount()
-		throws IOException
-	{
+	public void writeDocTopicCount() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(folderPath
 			+ expName + ".DTcount"));
 		for (int i = 0; i < numDocuments; i++) {
@@ -499,20 +449,29 @@ public class GibbsSamplingLDA
 		writer.close();
 	}
 
-	public void write()
-		throws IOException
-	{
+	public void write() throws IOException {
 		writeTopTopicalWords();
 		writeDocTopicPros();
 		writeTopicAssignments();
 		writeTopicWordPros();
 	}
 
-	public static void main(String args[])
-		throws Exception
-	{
-		GibbsSamplingLDA lda = new GibbsSamplingLDA("test/corpus.txt", 7, 0.1,
-			0.01, 2000, 20, "testLDA");
+	public static void main(String args[]) throws Exception {
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/corpus.txt", 40, 0.1, 0.01, 2000, 100, "testLDA");
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/ldap_bin_100_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "ldap_bin_100_ngrams");
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/bank_trace_sm_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "bank_trace_sm_ngrams");
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/ims_100_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "ims_100_ngrams");
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/twitter_sm_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "twitter_sm_ngrams");
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/txtldap_sample_100_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "txtldap_sample_100_ngrams");
+		
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/108_asgard_testworkload-r01.txt", 40, 0.1, 0.01, 2000, 100, "108_asgard_testworkload-r01_ngrams");
+		
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/2kHPC_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "2kHPC_ngrams");
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/2kBGL_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "2kBGL_ngrams");
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/2kProxifier_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "2kProxifier_ngrams");
+		//GibbsSamplingLDA lda = new GibbsSamplingLDA("test/2kSOSP_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "2kSOSP_ngrams");
+		GibbsSamplingLDA lda = new GibbsSamplingLDA("test/2kZookeeper_ngrams.txt", 40, 0.1, 0.01, 2000, 100, "2kZookeeper_ngrams");
+		
 		lda.inference();
 	}
 }

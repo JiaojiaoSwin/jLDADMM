@@ -1,0 +1,8 @@
+-model	LDA
+-corpus	test/twitter_sm_ngrams.txt
+-ntopics	40
+-alpha	0.1
+-beta	0.01
+-niters	2000
+-twords	100
+-name	twitter_sm_ngrams

@@ -23,12 +23,12 @@ public class jLDADMM
 {
 	public static void main(String[] args)
 	{
+		
 		CmdArgs cmdArgs = new CmdArgs();
 		CmdLineParser parser = new CmdLineParser(cmdArgs);
 		try {
 
 			parser.parseArgument(args);
-
 			if (cmdArgs.model.equals("LDA")) {
 				GibbsSamplingLDA lda = new GibbsSamplingLDA(cmdArgs.corpus,
 					cmdArgs.ntopics, cmdArgs.alpha, cmdArgs.beta,
@@ -60,18 +60,12 @@ public class jLDADMM
 					cmdArgs.prob);
 			}
 			else {
-				System.out
-					.println("Error: Option \"-model\" must get \"LDA\" or \"DMM\" or \"LDAinf\" or \"DMMinf\" or \"Eval\"");
-				System.out
-					.println("\tLDA: Specify the Latent Dirichlet Allocation topic model");
-				System.out
-					.println("\tDMM: Specify the one-topic-per-document Dirichlet Multinomial Mixture model");
-				System.out
-					.println("\tLDAinf: Infer topics for unseen corpus using a pre-trained LDA model");
-				System.out
-					.println("\tDMMinf: Infer topics for unseen corpus using a pre-trained DMM model");
-				System.out
-					.println("\tEval: Specify the document clustering evaluation");
+				System.out.println("Error: Option \"-model\" must get \"LDA\" or \"DMM\" or \"LDAinf\" or \"DMMinf\" or \"Eval\"");
+				System.out.println("\tLDA: Specify the Latent Dirichlet Allocation topic model");
+				System.out.println("\tDMM: Specify the one-topic-per-document Dirichlet Multinomial Mixture model");
+				System.out.println("\tLDAinf: Infer topics for unseen corpus using a pre-trained LDA model");
+				System.out.println("\tDMMinf: Infer topics for unseen corpus using a pre-trained DMM model");
+				System.out.println("\tEval: Specify the document clustering evaluation");
 				help(parser);
 				return;
 			}
@@ -90,8 +84,7 @@ public class jLDADMM
 
 	public static void help(CmdLineParser parser)
 	{
-		System.out
-			.println("java -jar jLDADMM.jar [options ...] [arguments...]");
+		System.out.println("java -jar jLDADMM.jar [options ...] [arguments...]");
 		parser.printUsage(System.out);
 	}
 }
